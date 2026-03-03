@@ -16,8 +16,11 @@ jobs:
 
       - name: Build with Buildozer
         run: |
-          # แก้ไขสิทธิ์การเข้าถึงเพื่อให้ Buildozer ทำงานได้
+          # ล้างสิทธิ์การเข้าถึงให้ถูกต้อง
           sudo chown -R runner:docker .
+          # คำสั่งล้าง Cache เพื่อให้ Buildozer รับรู้ว่าไฟล์ย้ายไปอยู่ใน /icons แล้ว
+          buildozer android clean
+          # เริ่ม Build ใหม่แบบล้างไพ่
           yes | buildozer android debug
         env:
           ACCEPT_SDK_LICENSE: "yes"

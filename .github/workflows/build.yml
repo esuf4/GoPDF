@@ -3,17 +3,12 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-22.04 # ระบุเวอร์ชันที่เสถียร
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get Date
-        shell: bash
-        run: echo "date=$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_OUTPUT
-        id: get-date
-
       - name: Build with Buildozer
-        uses: Mobile-Build/buildozer-action@v1.2.1 # ใช้ Action ตัวที่เสถียรกว่า
+        uses: Mobile-Builds/buildozer-action@v1.2.1 # แก้ไขจาก Mobile-Build เป็น Mobile-Builds (มี s)
         with:
           command: buildozer android debug
           buildozer_version: master
@@ -21,5 +16,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: GoPDF-APK-${{ steps.get-date.outputs.date }}
+          name: GoPDF-APK
           path: bin/*.apk
